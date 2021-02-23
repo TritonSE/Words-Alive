@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 
-import { ColumnBookList } from '../components/ColumnBookList';
+import { PaginationBookList } from '../components/PaginationBookList';
 import { HorizontalBookList } from '../components/HorizontalBookList';
 import { BookContext } from '../context/BookContext';
 import { TextStyles } from '../styles/TextStyles';
@@ -10,9 +10,12 @@ import { Colors } from '../styles/Colors';
 import { I18nContext } from '../context/I18nContext';
 import { LoadingCircle } from '../components/LoadingCircle';
 
+// constant for how many books to display per page
+const booksPerPage = 9;
+
 /**
- * Renders the homescreen for the app. Currently displays heading, new books, all books.
- */
+* Renders the homescreen for the app. Currently displays heading, new books, all books.
+*/
 export const HomeScreen: React.FC = () => {
   // get books from backend
   const booksCtx = useContext(BookContext);
@@ -23,6 +26,12 @@ export const HomeScreen: React.FC = () => {
   const allBooks = booksCtx.books;
 
   const i18nCtx = useContext(I18nContext);
+
+  // "chunk" the books into groups of size <booksPerPage> in order to display paginated books
+  const booksChunked = [];
+  for (let i = 0; i < allBooks.length; i += booksPerPage) {
+    booksChunked.push(allBooks.slice(i, i + booksPerPage));
+  }
 
   // fix to make the flatlist for AllBooks not be inside a scrollview but maintain scrolling
   const VirtualizedView: React.FC = (props) => {
@@ -60,8 +69,8 @@ export const HomeScreen: React.FC = () => {
         <Text style={TextStyles.h3}>{i18nCtx.t('allBooks')}</Text>
       </View>
 
-      <View style={styles.allBooks}>
-        { booksCtx.loading ? <LoadingCircle/> : <ColumnBookList books={allBooks}/> }
+      <View>
+        { booksCtx.loading ? <LoadingCircle/> : <PaginationBookList books={booksChunked}/> }
       </View>
 
     </VirtualizedView>
@@ -77,9 +86,5 @@ const styles = StyleSheet.create({
   heading: {
     color: Colors.orange,
     height: 400,
-  },
-  allBooks: {
-    marginLeft: 17,
-    marginRight: 17,
   },
 });
