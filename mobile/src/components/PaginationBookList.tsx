@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, FlatList, StyleSheet, View, Text } from 'react-native';
+import { Dimensions, StyleSheet, View, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Book } from '../models/Book';
 import { TextStyles } from '../styles/TextStyles';
@@ -21,21 +21,17 @@ export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books })
     >
 
       { books.map((bookArray, index) => (
-        <View style={styles.container} key={`${index}`}>
+        <View style={styles.container} key={index}>
 
-          <FlatList
-            listKey={`${index}`}
-            data={bookArray}
-            renderItem={({ item }) => (
-              <View key={item.id} style={styles.bookCard}>
-                <BookCard book={item} size={0.28 * width} />
+          <View style={styles.grid}>
+
+            { bookArray.map((bookItem) => (
+              <View key={bookItem.id} style={styles.bookCard}>
+                <BookCard book={bookItem} size={0.28 * width} />
               </View>
-            )}
-            numColumns={3}
-            scrollEnabled={false}
-            keyExtractor={book => book.id}
-            columnWrapperStyle={styles.spaceColumns}
-          />
+            ))}
+
+          </View>
 
           <View style={styles.text}>
             <Text style={TextStyles.h3}> {'<'} {index + 1} {'>'} </Text>
@@ -63,5 +59,11 @@ const styles = StyleSheet.create({
   },
   text: {
     alignItems: 'center',
+  },
+  grid: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    alignContent: 'space-around',
   },
 });
