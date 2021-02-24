@@ -44,25 +44,22 @@ export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books })
 };
 
 const styles = StyleSheet.create({
-  spaceColumns: {
-    justifyContent: 'space-between',
-  },
-  bookCard: {
-    marginBottom: 12,
-  },
   container: {
     flexGrow: 1,
     justifyContent: 'space-between',
     width: width - 34,
     marginHorizontal: 17,
   },
-  text: {
-    alignItems: 'center',
-  },
   grid: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
     alignContent: 'space-around',
+  },
+  bookCard: {
+    marginBottom: 12,
+  },
+  text: {
+    alignItems: 'center',
   },
 });
