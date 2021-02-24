@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { BookProvider } from './src/context/BookContext';
-import { SettingsScreen } from './src/screens/SettingsScreen';
+import { ProfileScreen } from './src/screens/ProfileScreen';
 import { ChatScreen } from './src/screens/ChatScreen';
 
 const Tab = createBottomTabNavigator();
@@ -33,7 +33,7 @@ const App: React.FC = () => {
                   const TabIcons = {
                     Home: <Image style={[styles.homeIcon, { tintColor: color }]} source={require('./assets/images/Home.png')} />,
                     Chat: <Image style={[styles.chatIcon, { tintColor: color }]} source={require('./assets/images/Chat_bubble.png')} />,
-                    Settings: <Image style={[styles.settingsIcon, { tintColor: color }]} source={require('./assets/images/Cog.png')} />,
+                    Profile: <Image style={[styles.profileIcon, { tintColor: color }]} source={require('./assets/images/user-solid.png')} />,
                   };
 
                   return TabIcons[route.name];
@@ -50,7 +50,7 @@ const App: React.FC = () => {
             >
               <Tab.Screen name="Chat" component={ChatScreen} />
               <Tab.Screen name="Home" component={HomeScreen} />
-              <Tab.Screen name="Settings" component={SettingsScreen} />
+              <Tab.Screen name="Profile" component={ProfileScreen} />
             </Tab.Navigator>
           </NavigationContainer>
         </SafeAreaView>
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     height: 22,
   },
 
-  settingsIcon: {
-    width: 26,
+  profileIcon: {
+    width: 22.75,
     height: 26,
   },
 
