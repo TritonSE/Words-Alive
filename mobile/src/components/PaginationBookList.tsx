@@ -1,6 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View, Text } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Dimensions, StyleSheet, View, Text, ScrollView } from 'react-native';
 import { Book } from '../models/Book';
 import { TextStyles } from '../styles/TextStyles';
 import { BookCard } from './BookCard';
