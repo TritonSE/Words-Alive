@@ -4,14 +4,23 @@ import { Book } from '../models/Book';
 import { TextStyles } from '../styles/TextStyles';
 import { BookCard } from './BookCard';
 
-type PaginationBookListProps = { books: Book[][] };
+// constant for how many books to display per page
+const booksPerPage = 9;
 
 const { width } = Dimensions.get('window');
 
+type PaginationBookListProps = { books: Book[] };
+
 /**
 * Renders a "paginated" list of books where books are grouped and displayed on multiple pages.
+* "Chunks" the books into groups of size <booksPerPage>.
 */
 export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books }) => {
+  const booksChunked = [];
+  for (let i = 0; i < books.length; i += booksPerPage) {
+    booksChunked.push(books.slice(i, i + booksPerPage));
+  }
+
   return (
     <ScrollView
       horizontal
@@ -19,7 +28,7 @@ export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books })
       pagingEnabled
     >
 
-      { books.map((bookArray, index) => (
+      { booksChunked.map((bookArray, index) => (
         <View style={styles.container} key={index}>
 
           <View style={styles.grid}>
