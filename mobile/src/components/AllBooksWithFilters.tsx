@@ -44,7 +44,7 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
       <View>
         <View style={loading ? styles.loading : filteredBooks.length === 0 ? styles.loading : null}>
-          {filteredBooks.length === 0 ? <Text style={styles.noResult}>No results for the search &quot;{searchTerm}&quot;</Text> : null}
+          {!loading && filteredBooks.length === 0 ? <Text style={styles.noResult}>No results for the search &quot;{searchTerm}&quot;</Text> : null}
         </View>
       </View>
 
