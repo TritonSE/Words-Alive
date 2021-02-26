@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, FlatList, KeyboardAvoidingView, Platform } from
 
 import { Svg, Circle } from 'react-native-svg';
 
-import { SearchAllBooks } from '../components/SearchAllBooks';
+import { AllBooksWithFilters } from '../components/AllBooksWithFilters';
 import { HorizontalBookList } from '../components/HorizontalBookList';
 import { LoadingCircle } from '../components/LoadingCircle';
 import { BookContext } from '../context/BookContext';
@@ -69,7 +69,7 @@ export const HomeScreen: React.FC = () => {
         </View>
 
         <View>
-          <SearchAllBooks allBooks={allBooks} loading={loading}/>
+          <AllBooksWithFilters allBooks={allBooks} loading={loading}/>
         </View>
 
       </VirtualizedView>

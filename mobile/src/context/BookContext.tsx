@@ -134,7 +134,7 @@ export const BookProvider: React.FC = ({ children }) => {
         },
         {
           id: '18',
-          title: '!@#%^&*(()_+{}|:"?><~',
+          title: '!@#%^&*(()_+{}|:"?><~-=',
           image: 'https://placekitten.com/200/310',
           createdAt: '1000',
         },
