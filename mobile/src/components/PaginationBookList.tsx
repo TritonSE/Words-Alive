@@ -25,7 +25,7 @@ export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books, b
       pagingEnabled
     >
 
-      { booksChunked.map((bookArray: Book[], index) => (
+      { booksChunked.map((bookArray: Book[], index: number) => (
         <View style={styles.container} key={index}>
 
           <View style={styles.grid}>

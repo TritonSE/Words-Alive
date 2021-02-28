@@ -175,7 +175,7 @@ export const BookProvider: React.FC = ({ children }) => {
           createdAt: '1000',
         },
       ];
-      //dispatch({ type: 'API_RETURNED', payload: books });
+      dispatch({ type: 'API_RETURNED', payload: books });
     });
   }
 

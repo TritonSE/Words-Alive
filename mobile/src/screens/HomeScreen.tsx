@@ -19,7 +19,7 @@ export const HomeScreen: React.FC = () => {
   const booksCtx = useContext(BookContext);
   useEffect(booksCtx.fetchBooks, []);
   const newBooks = booksCtx.books
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     .slice(0, 5);
   const allBooks = booksCtx.books;
   const { loading } = booksCtx;
