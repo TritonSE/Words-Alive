@@ -17,8 +17,10 @@ type AllBooksWithFiltersProps = { allBooks: Book[], loading: boolean};
 export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBooks, loading }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
+  // "filters" books by either title or author based on the searchTerm
   const filteredBooks = searchTerm === '' ? allBooks : allBooks.filter((bookItem: Book) => {
-    return bookItem.title.toUpperCase().includes(searchTerm.toUpperCase());
+    return bookItem.title.toUpperCase().includes(searchTerm.toUpperCase())
+    || bookItem.author.toUpperCase().includes(searchTerm.toUpperCase());
   });
 
   return (
@@ -35,7 +37,7 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
           onBlur={Keyboard.dismiss}
         />
         <Text>{searchTerm}</Text>
-        <Text>{JSON.stringify(filteredBooks.map(b => b.title))}</Text>
+        <Text>{JSON.stringify(filteredBooks.map(b => ('{Title: ' + b.title + ' | Author: ' + b.author + '}')))}</Text>
       </View>
 
       <View>
@@ -44,7 +46,7 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
       <View>
         <View style={loading ? styles.loading : filteredBooks.length === 0 ? styles.loading : null}>
-          {!loading && filteredBooks.length === 0 ? <Text style={styles.noResult}>No results for the search &quot;{searchTerm}&quot;</Text> : null}
+          {!loading && filteredBooks.length === 0 ? <Text style={styles.noResult}>No results for &quot;{searchTerm}&quot;</Text> : null}
         </View>
       </View>
 
