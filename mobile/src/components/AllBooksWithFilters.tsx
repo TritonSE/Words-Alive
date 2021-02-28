@@ -37,7 +37,7 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
           onBlur={Keyboard.dismiss}
         />
         <Text>{searchTerm}</Text>
-        <Text>{JSON.stringify(filteredBooks.map(b => ('{Title: ' + b.title + ' | Author: ' + b.author + '}')))}</Text>
+        <Text>{JSON.stringify(filteredBooks.map(b => (`{Title: ${b.title} | Author: ${b.author}}`)))}</Text>
       </View>
 
       <View>

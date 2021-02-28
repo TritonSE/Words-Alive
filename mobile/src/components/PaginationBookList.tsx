@@ -12,14 +12,13 @@ type PaginationBookListProps = { books: Book[], booksPerPage: number };
 * Renders a "paginated" list of books where books are grouped and displayed on multiple pages.
 */
 export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books, booksPerPage }) => {
-  
   // "Chunks" the books into groups of size <booksPerPage> and fills any empty spots
   const booksChunked = [];
   const empty = Array(booksPerPage).fill(null);
 
   for (let i = 0; i < books.length; i += booksPerPage) {
-    let emptyCount = i + booksPerPage > books.length ? (i+booksPerPage) - books.length: 0;
-    booksChunked.push(books.slice(i, i + booksPerPage).concat(empty.slice(0,emptyCount)));
+    const emptyCount = i + booksPerPage > books.length ? (i + booksPerPage) - books.length : 0;
+    booksChunked.push(books.slice(i, i + booksPerPage).concat(empty.slice(0, emptyCount)));
   }
 
   return (
@@ -30,27 +29,31 @@ export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books, b
     >
 
       { booksChunked.map((bookArray: Book[], index: number) => (
-        <View key={'page'+index} style={styles.container}>
+        <View key={`page${index}`} style={styles.container}>
 
           <View style={styles.grid}>
 
             { bookArray.map((bookItem: Book, emptyIndex: number) => (
 
-              bookItem != null  ?  
-              <View key={'bookID'+bookItem.id} style={styles.bookCard}>
-                <BookCard book={bookItem} size={0.28 * width} />
-              </View>
-              :
-              <View key={'empty'+emptyIndex} style={styles.bookCard}>
-                <View style={styles.emptyBook} />
-              </View>
+              bookItem != null ?
+                (
+                  <View key={`bookID${bookItem.id}`} style={styles.bookCard}>
+                    <BookCard book={bookItem} size={0.28 * width} />
+                  </View>
+                )
+                :
+                (
+                  <View key={`empty${emptyIndex}`} style={styles.bookCard}>
+                    <View style={styles.emptyBook} />
+                  </View>
+                )
             ))}
 
           </View>
 
           <View style={styles.text}>
             <Text style={TextStyles.h3}> {'<'} {index + 1} {'>'} </Text>
-            <Text style={{...TextStyles.h1, fontSize: 10}}>of {booksChunked.length}</Text>
+            <Text style={{ ...TextStyles.h1, fontSize: 10 }}>of {booksChunked.length}</Text>
           </View>
 
         </View>
@@ -77,8 +80,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   emptyBook: {
-    width: 0.28*width,
-    height: 0.28*width,
+    width: 0.28 * width,
+    height: 0.28 * width,
   },
   text: {
     alignItems: 'center',
