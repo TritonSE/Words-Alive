@@ -28,13 +28,14 @@ export const BookProvider: React.FC = ({ children }) => {
     }).catch((err) => {
       console.log(err);
 
-      //! !!! DELETE LATER -- currently using for testing purposes !!!!
+      //!!!! DELETE LATER -- currently using for testing purposes !!!!
       const books: Book[] = [
         {
           id: '1',
           title: 'Harry Potter',
           image: 'https://placekitten.com/200/300',
           author: 'JK Rowling',
+          languages: ['en, es, fr'],
           created_at: '10000',
         },
         {
@@ -42,6 +43,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Holes',
           image: 'https://placekitten.com/200/301',
           author: 'Loius Sachar',
+          languages: ['en'],
           created_at: '1500',
         },
         {
@@ -49,6 +51,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Pinocchio',
           image: 'https://placekitten.com/200/302',
           author: 'Carlo Collodi',
+          languages: ['en'],
           created_at: '2000',
         },
         {
@@ -56,6 +59,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Hunger Games',
           image: 'https://placekitten.com/200/303',
           author: 'Suzanne Collins',
+          languages: ['en'],
           created_at: '3000',
         },
         {
@@ -63,6 +67,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Maze Runner',
           image: 'https://placekitten.com/200/304',
           author: 'James Dashner',
+          languages: ['en'],
           created_at: '1000',
         },
         {
@@ -70,6 +75,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Great Gatsby',
           image: 'https://placekitten.com/200/305',
           author: 'F. Scott Fitzgerald',
+          languages: ['en'],
           created_at: '1000',
         },
         {
@@ -77,6 +83,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: '1984',
           image: 'https://placekitten.com/200/306',
           author: 'George Orwell',
+          languages: ['en'],
           created_at: '1000',
         },
         {
@@ -84,6 +91,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Brave New World',
           image: 'https://placekitten.com/200/307',
           author: 'Aldous Huxley',
+          languages: ['en'],
           created_at: '1000',
         },
         {
@@ -91,6 +99,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Percy Jackson',
           image: 'https://placekitten.com/200/310',
           author: 'Rick Riordan',
+          languages: ['en', 'es'],
           created_at: '1000',
         },
         {
@@ -98,6 +107,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Dune',
           image: 'https://placekitten.com/200/300',
           author: 'Frank Herbert',
+          languages: ['en'],
           created_at: '10000',
         },
         {
@@ -105,6 +115,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Charlotte\'s Web',
           image: 'https://placekitten.com/200/301',
           author: 'E.B. White',
+          languages: ['en', 'fr', 'es'],
           created_at: '1500',
         },
         {
@@ -112,6 +123,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Where the Wild Things Are',
           image: 'https://placekitten.com/200/302',
           author: 'Maurice Sendak',
+          languages: ['en'],
           created_at: '2000',
         },
         {
@@ -119,6 +131,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Süite française',
           image: 'https://placekitten.com/200/303',
           author: 'Irène Némirovsky',
+          languages: ['fr'],
           created_at: '3000',
         },
         {
@@ -126,6 +139,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'The Cat in The Hat',
           image: 'https://placekitten.com/200/304',
           author: 'Dr. Seuss',
+          languages: ['en', 'es', 'fr'],
           created_at: '1000',
         },
         {
@@ -133,6 +147,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Charlie and the Chocolate Factory',
           image: 'https://placekitten.com/200/305',
           author: 'Roald Dahl',
+          languages: ['en', 'fr'],
           created_at: '1000',
         },
         {
@@ -140,6 +155,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Diary of a Wimpy Kid',
           image: 'https://placekitten.com/200/306',
           author: 'Jeff Kinney',
+          languages: ['en'],
           created_at: '1000',
         },
         {
@@ -147,6 +163,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Green Eggs & Ham',
           image: 'https://placekitten.com/200/307',
           author: 'Dr. Seuss',
+          languages: ['en', 'fr', 'es'],
           created_at: '1000',
         },
         {
@@ -154,6 +171,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: '!@#%^&*(()_+{}|:"?><~-=',
           image: 'https://placekitten.com/200/310',
           author: 'no author',
+          languages: ['fr', 'es'],
           created_at: '1000',
         },
         {
@@ -161,6 +179,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'The BFG',
           image: 'https://placekitten.com/200/300',
           author: 'Roald Dahl',
+          languages: ['en'],
           created_at: '10000',
         },
         {
@@ -168,6 +187,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Hobbit',
           image: 'https://placekitten.com/200/301',
           author: 'J.R.R. Tolkien',
+          languages: ['en'],
           created_at: '1500',
         },
         {
@@ -175,6 +195,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'La fiesta de cumpleaños',
           image: 'https://placekitten.com/200/302',
           author: 'Toon Tellegen',
+          languages: ['es'],
           created_at: '2000',
         },
         {
@@ -182,6 +203,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Nos jeux préférés',
           image: 'https://placekitten.com/200/303',
           author: 'Jean-Phillipe Chabot',
+          languages: ['es', 'fr'],
           created_at: '3000',
         },
         {
@@ -189,6 +211,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Winnie-the-Pooh',
           image: 'https://placekitten.com/200/304',
           author: 'A.A. Milne',
+          languages: ['en', 'es', 'fr'],
           created_at: '1000',
         },
         {
@@ -196,6 +219,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Bridge to Terabithia',
           image: 'https://placekitten.com/200/305',
           author: 'Katherine Patterson',
+          languages: ['en'],
           created_at: '1000',
         },
       ];

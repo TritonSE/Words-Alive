@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { TextInput, Keyboard, Text, View, StyleSheet, Dimensions } from 'react-native';
+
 import { LoadingCircle } from './LoadingCircle';
 import { PaginationBookList } from './PaginationBookList';
 import { Book } from '../models/Book';
-
+import { TextStyles } from '../styles/TextStyles';
+ 
 // constant for how many books to display per page
 const booksPerPage = 9;
 
@@ -31,7 +33,7 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
         <TextInput
           style={styles.textInput}
           clearButtonMode="always"
-          placeholder="Search for a book by title or author"
+          placeholder="   Search for a book by title or author"
           value={searchTerm}
           onChangeText={text => setSearchTerm(text)}
           onBlur={Keyboard.dismiss}
@@ -46,11 +48,12 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
       <View>
         <View style={loading ? styles.loading : filteredBooks.length === 0 ? styles.loading : null}>
-          {!loading && filteredBooks.length === 0 ? <Text style={styles.noResult}>No results for &quot;{searchTerm}&quot;</Text> : null}
+          { !loading && filteredBooks.length === 0 ? <Text style={styles.noResult}>No results for &quot;{searchTerm}&quot;</Text> : null }
         </View>
       </View>
 
     </View>
+
 
   );
 };
@@ -60,6 +63,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: 'grey',
     borderWidth: 1,
+    ...TextStyles.c3,
   },
   container: {
     flex: 1,
@@ -72,6 +76,7 @@ const styles = StyleSheet.create({
     height: (0.28 * width * booksPerPage / 3) + (12 * booksPerPage / 3),
   },
   noResult: {
+    ...TextStyles.c2,
     textAlign: 'center',
   },
 });

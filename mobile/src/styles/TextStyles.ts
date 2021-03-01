@@ -17,5 +17,19 @@ export const TextStyles = StyleSheet.create({
     fontFamily: 'Gotham-Medium',
     fontWeight: 'normal',
   },
-
+  c1: {
+    fontSize: 20,
+    fontFamily: 'Gotham-Medium',
+    fontWeight: 'normal',
+  },
+  c2: {
+    fontSize: 14,
+    fontFamily: 'Gotham-Medium',
+    fontWeight: 'normal',
+  },
+  c3: {
+    fontSize: 14,
+    fontFamily: 'Gotham-Light',
+    fontWeight: '300',
+  },
 });

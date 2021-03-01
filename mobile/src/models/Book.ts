@@ -4,6 +4,7 @@ export type Book = {
     title: string
     author: string
     image?: string
+    languages: string[]
     created_at: string
 };
 

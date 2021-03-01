@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dimensions, StyleSheet, View, Text, ScrollView } from 'react-native';
+
 import { Book } from '../models/Book';
 import { TextStyles } from '../styles/TextStyles';
 import { BookCard } from './BookCard';
@@ -13,7 +14,7 @@ type PaginationBookListProps = { books: Book[], booksPerPage: number };
 */
 export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books, booksPerPage }) => {
   // "Chunks" the books into groups of size <booksPerPage> and fills any empty spots
-  const booksChunked = [];
+  const booksChunked: Book[][] = [];
   const empty = Array(booksPerPage).fill(null);
 
   for (let i = 0; i < books.length; i += booksPerPage) {
