@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginBottom: 35,
 		paddingVertical: 5,
-		paddingHorizontal: 5,
   },
 
   buttonActive: {
