@@ -5,7 +5,9 @@ import { LoadingCircle } from './LoadingCircle';
 import { PaginationBookList } from './PaginationBookList';
 import { Book } from '../models/Book';
 import { TextStyles } from '../styles/TextStyles';
- 
+import { ColumnBookList } from './ColumnBookList';
+import { Colors } from '../styles/Colors';
+
 // constant for how many books to display per page
 const booksPerPage = 9;
 
@@ -59,18 +61,24 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 };
 
 const styles = StyleSheet.create({
+  inputPadding: {
+    paddingHorizontal: 17,
+    marginBottom: 19,
+  },
   textInput: {
     height: 40,
-    borderColor: 'grey',
-    borderWidth: 1,
+    width: width - 34,
+    borderColor: Colors.orange,
+    borderWidth: 2,
+    borderRadius: 5,
     ...TextStyles.c3,
+    shadowColor: 'black',
+    shadowRadius: 2,
+    shadowOpacity: 0.16,
+    shadowOffset: { width: 0, height: 3 },
   },
   container: {
     flex: 1,
-  },
-  inputPadding: {
-    marginHorizontal: 30,
-    marginVertical: 10,
   },
   loading: {
     height: (0.28 * width * booksPerPage / 3) + (12 * booksPerPage / 3),

@@ -56,7 +56,7 @@ export const HomeScreen: React.FC = () => {
           </Svg>
         </View>
 
-        <View style={styles.textPadding}>
+        <View style={styles.newBooksTextPadding}>
           <Text style={TextStyles.h3}>{i18nCtx.t('newBooks')}</Text>
         </View>
 
@@ -64,7 +64,7 @@ export const HomeScreen: React.FC = () => {
           { booksCtx.loading ? <LoadingCircle/> : <HorizontalBookList books={newBooks}/> }
         </View>
 
-        <View style={styles.textPadding}>
+        <View style={styles.allBooksTextPadding}>
           <Text style={TextStyles.h3}>{i18nCtx.t('allBooks')}</Text>
         </View>
 
@@ -81,9 +81,14 @@ const styles = StyleSheet.create({
   keyboardView: {
     flex: 1,
   },
-  textPadding: {
+  newBooksTextPadding: {
     paddingTop: 33,
     paddingBottom: 19,
+    paddingLeft: 17,
+  },
+  allBooksTextPadding: {
+    paddingTop: 33,
+    paddingBottom: 13,
     paddingLeft: 17,
   },
   heading: {
