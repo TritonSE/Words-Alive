@@ -28,7 +28,7 @@ export const BookProvider: React.FC = ({ children }) => {
     }).catch((err) => {
       console.log(err);
 
-      //!!!! DELETE LATER -- currently using for testing purposes !!!!
+      //! !!! DELETE LATER -- currently using for testing purposes !!!!
       const books: Book[] = [
         {
           id: '1',
@@ -136,9 +136,9 @@ export const BookProvider: React.FC = ({ children }) => {
         },
         {
           id: '14',
-          title: 'The Cat in The Hat',
+          title: 'The Kane Chronicles',
           image: 'https://placekitten.com/200/304',
-          author: 'Dr. Seuss',
+          author: 'Rick Riordan',
           languages: ['en', 'es', 'fr'],
           created_at: '1000',
         },
@@ -160,9 +160,9 @@ export const BookProvider: React.FC = ({ children }) => {
         },
         {
           id: '17',
-          title: 'Green Eggs & Ham',
+          title: 'The Giver',
           image: 'https://placekitten.com/200/307',
-          author: 'Dr. Seuss',
+          author: 'Lois Lowry',
           languages: ['en', 'fr', 'es'],
           created_at: '1000',
         },
