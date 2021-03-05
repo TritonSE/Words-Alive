@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, Pressable, Modal } from 'react-native';
-// import { Dimensions } from 'react-native';
 import { Colors } from '../styles/Colors';
 
 import { Languages } from '../models/Languages';
@@ -8,23 +7,30 @@ import { TextStyles } from '../styles/TextStyles';
 
 // const { width } = Dimensions.get('window');
 
-export const LangFilter: React.FC = () => {
-  //  const langCodes = Object.keys(Languages);
-  //  const langWords = Object.values(Languages);
+const langCodes = Object.keys(Languages);
+const langNames = Object.values(Languages);
+const numLangs = langCodes.length;
 
+const languages = [];
+
+langNames.map(el => {
+    languages.push({lang: el, isActive: false})
+});
+
+const activeLanguages = {
+  arr: languages,
+};
+
+export const LangFilter: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  // const languages = {};
-  // Object.keys(Languages).map(key => (languages[key] = false));
-  // console.log(languages);
+  const [_, setLangToggle] = useState(activeLanguages);
 
-  // const [langChecked, setLangChecked] = useState(languages);
-  // const langs = ['en', 'es']
-  // langs.push()/langs.pop()
-
-  const [enChecked, setEnChecked] = useState(false);
-  const [esChecked, setEsChecked] = useState(false);
-  const [frChecked, setFrChecked] = useState(false);
+  const onChangeLangFilter = (index: number) => {
+    const temp = activeLanguages.arr;
+    temp[index].isActive = !temp[index].isActive;
+    setLangToggle({ arr: temp });
+  };
 
   return (
     <View style={styles.container}>
@@ -41,44 +47,22 @@ export const LangFilter: React.FC = () => {
 
           <View style={styles.modalView}>
 
-            {/* {langCodes.map((lang) => (
-                    <View key={lang} style={styles.languagesList}>
-                        <Text>{Languages[lang]}</Text>
-                    </View>
-                ))} */}
+            <View style={styles.langList}>
+              {activeLanguages.arr.map((el, index: number) => (
 
-            <View key="en" style={styles.langList}>
+                <View key={el.lang} style={{ flexDirection: 'row' }}>
+                  <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{el.lang}</Text>
 
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{Languages.en}</Text>
-                <Pressable
-                  style={styles.checkButton}
-                  onPress={() => setEnChecked(!enChecked)}
-                >
-                  <View style={enChecked ? styles.boxChecked : styles.boxNotChecked}/>
-                </Pressable>
-              </View>
+                  <Pressable
+                    style={styles.checkButton}
+                    onPress={() => onChangeLangFilter(index)}
+                  >
+                    <View style={el.isActive ? styles.boxChecked : styles.boxNotChecked} />
+                  </Pressable>
 
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{Languages.es}</Text>
-                <Pressable
-                  style={styles.checkButton}
-                  onPress={() => setEsChecked(!esChecked)}
-                >
-                  <View style={esChecked ? styles.boxChecked : styles.boxNotChecked}/>
-                </Pressable>
-              </View>
+                </View>
 
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{Languages.fr}</Text>
-                <Pressable
-                  style={styles.checkButton}
-                  onPress={() => setFrChecked(!frChecked)}
-                >
-                  <View style={frChecked ? styles.boxChecked : styles.boxNotChecked}/>
-                </Pressable>
-              </View>
-
+              ))}
             </View>
 
             <Pressable
@@ -122,7 +106,7 @@ const styles = StyleSheet.create({
   langList: {
     marginVertical: 5,
     // flexDirection: 'row',
-    backgroundColor: 'yellow',
+    // backgroundColor: 'yellow',
   },
   checkButton: {
     marginLeft: 20,
@@ -144,7 +128,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   modalView: {
-    height: 115,
+    height: numLangs * 24 + 20,
     width: 111,
     margin: 10,
     padding: 5,
@@ -162,7 +146,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.orange,
   },
   confirmButton: {
-    padding: 10,
+    padding: 7.5,
+    height: 30,
+    width: 90,
     backgroundColor: Colors.orange,
   },
   confirmText: {

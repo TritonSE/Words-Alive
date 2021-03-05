@@ -25,7 +25,7 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
     <View>
 
-      {/* <LangFilter></LangFilter> */}
+      <LangFilter/>
 
       <View style={styles.searchFilterPadding}>
         {searchFilterComponent}
