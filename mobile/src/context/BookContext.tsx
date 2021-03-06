@@ -35,7 +35,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Harry Potter',
           image: 'https://placekitten.com/200/300',
           author: 'JK Rowling',
-          languages: ['en, es, fr'],
+          languages: ['en', 'es', 'fr'],
           created_at: '10000',
         },
         {

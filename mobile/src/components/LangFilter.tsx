@@ -1,78 +1,74 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Pressable, Modal } from 'react-native';
+import { Text, View, StyleSheet, Pressable, Modal, Dimensions } from 'react-native';
 import { Colors } from '../styles/Colors';
 
 import { Languages } from '../models/Languages';
 import { TextStyles } from '../styles/TextStyles';
 
-// const { width } = Dimensions.get('window');
 
+const { height } = Dimensions.get('window');
+
+// language codes and the number of languages
 const langCodes = Object.keys(Languages);
-const langNames = Object.values(Languages);
 const numLangs = langCodes.length;
 
-const languages = [];
-
-langNames.map(el => {
-    languages.push({lang: el, isActive: false})
+// array of objects containing the language code and whether the language is "active" for the filter
+const langArray = [];
+langCodes.map(el => {
+    langArray.push({lang: el, isActive: false,})
 });
 
-const activeLanguages = {
-  arr: languages,
+// object containing the array of language objects
+const langState = {
+  arr: langArray,
 };
 
 export const LangFilter: React.FC = () => {
+  // states for the modal pop-up and languages for the buttons & filter
   const [modalVisible, setModalVisible] = useState(false);
+  const [languages, setLanguages] = useState(langState);
 
-  const [_, setLangToggle] = useState(activeLanguages);
-
+  // toggle the language at a given index 
   const onChangeLangFilter = (index: number) => {
-    const temp = activeLanguages.arr;
+    const temp = langState.arr;
     temp[index].isActive = !temp[index].isActive;
-    setLangToggle({ arr: temp });
+    setLanguages({ arr: temp });
   };
 
   return (
     <View style={styles.container}>
 
       <Modal
-        animationType="fade"
+        animationType="slide"
         transparent
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.centeredView}>
 
-          <View style={styles.modalView}>
+        <View style={styles.modalView}>
 
-            <View style={styles.langList}>
-              {activeLanguages.arr.map((el, index: number) => (
+          {languages.arr.map((el, index: number) => (
 
-                <View key={el.lang} style={{ flexDirection: 'row' }}>
-                  <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{el.lang}</Text>
+            <View key={el.lang} style={styles.nameBoxContainer}>
+              <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{Languages[el.lang]}</Text>
 
-                  <Pressable
-                    style={styles.checkButton}
-                    onPress={() => onChangeLangFilter(index)}
-                  >
-                    <View style={el.isActive ? styles.boxChecked : styles.boxNotChecked} />
-                  </Pressable>
+              <Pressable
+                style={el.isActive ? styles.boxChecked : styles.boxNotChecked}
+                onPress={() => onChangeLangFilter(index)}
+              />
 
-                </View>
-
-              ))}
             </View>
 
-            <Pressable
-              style={styles.confirmButton}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.confirmText}>Confirm</Text>
-            </Pressable>
+          ))}
 
-          </View>
+          <Pressable
+            style={styles.confirmButton}
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <Text style={styles.confirmText}>Confirm</Text>
+          </Pressable>
 
         </View>
 
@@ -93,23 +89,33 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     width: 40,
-    margin: 17,
+    marginRight: 10,
     backgroundColor: 'lightblue',
   },
-  centeredView: {
-    justifyContent: 'center',
-    height: 150,
-    width: 140,
-    margin: 17,
-    backgroundColor: 'lightblue',
+  filterButton: {
+    height: 40,
+    width: 40,
+    backgroundColor: Colors.orange,
   },
-  langList: {
-    marginVertical: 5,
-    // flexDirection: 'row',
-    // backgroundColor: 'yellow',
+  modalView: {
+    height: numLangs * 26 + 60,
+    width: 111,
+    marginLeft: 17,
+    marginTop: height*0.4,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    backgroundColor: 'white',
+    borderWidth: 2,
+    borderColor: Colors.orange,
+    shadowColor: 'black',
+    shadowRadius: 2,
+    shadowOpacity: 0.16,
+    shadowOffset: { width: 0, height: 3 },
   },
-  checkButton: {
-    marginLeft: 20,
+  nameBoxContainer: {
+    flexDirection: 'row',
+    marginBottom: 2,
+    justifyContent: 'space-between'
   },
   boxChecked: {
     height: 24,
@@ -127,25 +133,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.orange,
     backgroundColor: 'red',
   },
-  modalView: {
-    height: numLangs * 24 + 20,
-    width: 111,
-    margin: 10,
-    padding: 5,
-    backgroundColor: 'white',
-    borderWidth: 2,
-    borderColor: Colors.orange,
-    shadowColor: 'black',
-    shadowRadius: 2,
-    shadowOpacity: 0.16,
-    shadowOffset: { width: 0, height: 3 },
-  },
-  filterButton: {
-    height: 40,
-    width: 40,
-    backgroundColor: Colors.orange,
-  },
   confirmButton: {
+    alignSelf: 'center',
+    marginTop: 5,
     padding: 7.5,
     height: 30,
     width: 90,
@@ -155,9 +145,5 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     ...TextStyles.c2,
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
   },
 });

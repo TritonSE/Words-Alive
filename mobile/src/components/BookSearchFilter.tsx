@@ -9,16 +9,21 @@ const { width } = Dimensions.get('window');
 
 type BookSearchFilterProps = { onFilterChange: (searchTerm: string) => void };
 
+/**
+ * Component that renders a search bar for the user to find books by title or author.
+ */
 const BookSearchFilter = ({ onFilterChange }: BookSearchFilterProps): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
 
+  // When the text inside the search bar is changed, set that text to be the searchTerm
+  // and filter the books based on the text.
   const onChangeSearch = (text: string) => {
     setSearchTerm(text);
     onFilterChange(text);
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
         value={searchTerm}
         onChangeText={onChangeSearch}
@@ -32,6 +37,11 @@ const BookSearchFilter = ({ onFilterChange }: BookSearchFilterProps): JSX.Elemen
   );
 };
 
+/**
+ * Custom hook that filters books on user input in the search bar and returns the
+ * filtered books in an array and the BookSearchFilter component.
+ * The filterBooks method does the actual filtering and is passed into the component.
+ */
 export const useBookSearchFilter = (allBooks: Book[]): [Book[], JSX.Element] => {
   const [filteredBooks, setFilteredBooks] = useState(allBooks);
 
@@ -50,9 +60,12 @@ export const useBookSearchFilter = (allBooks: Book[]): [Book[], JSX.Element] => 
 };
 
 const styles = StyleSheet.create({
+  container: {
+    height: 40,
+  },
   searchBar: {
     height: 40,
-    width: width - 34,
+    width: width - 84,
     borderColor: Colors.orange,
     borderWidth: 2,
     borderRadius: 5,
