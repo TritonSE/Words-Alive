@@ -20,7 +20,7 @@ export const BookProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const client = useContext(APIContext);
 
-  // loads books. If error, logs erorr and returns a loading indicator of true
+  // loads books. If error, logs error and returns a loading indicator of true
   function fetchBooks(): void {
     dispatch({ type: 'API_CALL_STARTED' });
     client.getBooks().then((res) => {
@@ -29,7 +29,7 @@ export const BookProvider: React.FC = ({ children }) => {
       console.log(err);
 
       //! !!! DELETE LATER -- currently using for testing purposes !!!!
-      // en: , es:10 , fr:8, es&fr:12,
+      // en: 20, es:10 , fr:8, es&fr:12,
       const books: Book[] = [
         {
           id: '1',
