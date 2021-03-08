@@ -134,8 +134,8 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
       </View>
 
       <View>
-        <View style={loading ? styles.loading : filteredBySearch.length === 0 ? styles.loading : null}>
-          { !loading && filteredBySearch.length === 0 ? <Text style={styles.noResult}>No results</Text> : null }
+        <View style={loading ? styles.loading : filteredBooks.length === 0 ? styles.loading : null}>
+          { !loading && filteredBooks.length === 0 ? <Text style={styles.noResult}>No results</Text> : null }
         </View>
       </View>
 
