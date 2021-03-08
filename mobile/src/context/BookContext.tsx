@@ -29,6 +29,7 @@ export const BookProvider: React.FC = ({ children }) => {
       console.log(err);
 
       //! !!! DELETE LATER -- currently using for testing purposes !!!!
+      // en: , es:10 , fr:8, es&fr:12,
       const books: Book[] = [
         {
           id: '1',
@@ -83,7 +84,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: '1984',
           image: 'https://placekitten.com/200/306',
           author: 'George Orwell',
-          languages: ['en'],
+          languages: ['en', 'es'],
           created_at: '1000',
         },
         {
@@ -139,7 +140,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'The Kane Chronicles',
           image: 'https://placekitten.com/200/304',
           author: 'Rick Riordan',
-          languages: ['en', 'es', 'fr'],
+          languages: ['en', 'es'],
           created_at: '1000',
         },
         {

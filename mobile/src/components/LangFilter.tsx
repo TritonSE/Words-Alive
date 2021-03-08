@@ -5,7 +5,6 @@ import { Colors } from '../styles/Colors';
 import { Languages } from '../models/Languages';
 import { TextStyles } from '../styles/TextStyles';
 
-
 const { height } = Dimensions.get('window');
 
 // language codes and the number of languages
@@ -14,8 +13,8 @@ const numLangs = langCodes.length;
 
 // array of objects containing the language code and whether the language is "active" for the filter
 const langArray = [];
-langCodes.map(el => {
-    langArray.push({lang: el, isActive: false,})
+langCodes.forEach(el => {
+  langArray.push({ lang: el, isActive: false });
 });
 
 // object containing the array of language objects
@@ -28,8 +27,8 @@ export const LangFilter: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [languages, setLanguages] = useState(langState);
 
-  // toggle the language at a given index 
-  const onChangeLangFilter = (index: number) => {
+  // toggle the language at a given index
+  const onChangeLangFilter = (index: number): void => {
     const temp = langState.arr;
     temp[index].isActive = !temp[index].isActive;
     setLanguages({ arr: temp });
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
     height: numLangs * 26 + 60,
     width: 111,
     marginLeft: 17,
-    marginTop: height*0.4,
+    marginTop: height * 0.4,
     paddingVertical: 10,
     paddingHorizontal: 5,
     backgroundColor: 'white',
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
   nameBoxContainer: {
     flexDirection: 'row',
     marginBottom: 2,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   boxChecked: {
     height: 24,

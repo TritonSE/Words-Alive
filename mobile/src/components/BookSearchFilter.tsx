@@ -17,7 +17,7 @@ const BookSearchFilter = ({ onFilterChange }: BookSearchFilterProps): JSX.Elemen
 
   // When the text inside the search bar is changed, set that text to be the searchTerm
   // and filter the books based on the text.
-  const onChangeSearch = (text: string) => {
+  const onChangeSearch = (text: string): void => {
     setSearchTerm(text);
     onFilterChange(text);
   };
@@ -32,6 +32,7 @@ const BookSearchFilter = ({ onFilterChange }: BookSearchFilterProps): JSX.Elemen
         clearButtonMode="always"
         style={styles.searchBar}
       />
+      <Text>{searchTerm}</Text>
     </View>
   );
 };
@@ -44,7 +45,7 @@ const BookSearchFilter = ({ onFilterChange }: BookSearchFilterProps): JSX.Elemen
 export const useBookSearchFilter = (allBooks: Book[]): [Book[], JSX.Element] => {
   const [filteredBooks, setFilteredBooks] = useState(allBooks);
 
-  const filterBooks = (searchTerm: string) => {
+  const filterBooks = (searchTerm: string): void => {
     setFilteredBooks(
       allBooks.filter((book: Book) => {
         return book.title.toUpperCase().includes(searchTerm.toUpperCase())
