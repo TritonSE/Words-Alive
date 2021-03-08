@@ -17,17 +17,17 @@ const { width } = Dimensions.get('window');
 type AllBooksWithFiltersProps = { allBooks: Book[], loading: boolean};
 
 
-const l = {
+const test = {
   arr: [
     {lang: 'en', isActive: false},
-    {lang: 'es', isActive: true},
-    {lang: 'fr', isActive: true},
+    {lang: 'es', isActive: false},
+    {lang: 'fr', isActive: false},
   ]
 };
 
 const activeLanguages = []
 
-l.arr.map(item=> {
+test.arr.map(item=> {
   if (item.isActive){
     activeLanguages.push(item.lang);
   }
@@ -37,20 +37,19 @@ l.arr.map(item=> {
  *  Renders the All Books section with a search filter and displays the paginated books.
  */
 export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBooks, loading }) => {
-  const [filteredBooks, searchFilterComponent] = useBookSearchFilter(allBooks);
+  const [filteredBySearch, searchFilterComponent] = useBookSearchFilter(allBooks);
 
   const filteredByLang = [];
   if (activeLanguages.length != 0) {
-    for (let i=0; i< filteredBooks.length; i++){
-      const b = filteredBooks[i].languages;
-      if (b.some(el => activeLanguages.includes(el))){
-        filteredByLang.push(filteredBooks[i]);
+    for (let i = 0; i < filteredBySearch.length; i++){
+      const bookItemLangs = filteredBySearch[i].languages;
+      if (bookItemLangs.some(l => activeLanguages.includes(l))){
+        filteredByLang.push(filteredBySearch[i]);
       }
     }
   } 
 
-  //res instead of filteredBooks
-  const res = activeLanguages.length == 0 ? filteredBooks : filteredByLang;
+  const filteredBooks = activeLanguages.length === 0 ? filteredBySearch : filteredByLang;
 
   return (
 
@@ -68,12 +67,12 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
 
       <View>
-        { loading ? <LoadingCircle/> : <PaginationBookList books={filteredBooks} booksPerPage={booksPerPage}/> }
+        { loading ? <LoadingCircle/> : <PaginationBookList books={filteredBySearch} booksPerPage={booksPerPage}/> }
       </View>
 
       <View>
-        <View style={loading ? styles.loading : filteredBooks.length === 0 ? styles.loading : null}>
-          { !loading && filteredBooks.length === 0 ? <Text style={styles.noResult}>No results</Text> : null }
+        <View style={loading ? styles.loading : filteredBySearch.length === 0 ? styles.loading : null}>
+          { !loading && filteredBySearch.length === 0 ? <Text style={styles.noResult}>No results</Text> : null }
         </View>
       </View>
 

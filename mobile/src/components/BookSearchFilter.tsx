@@ -32,7 +32,6 @@ const BookSearchFilter = ({ onFilterChange }: BookSearchFilterProps): JSX.Elemen
         clearButtonMode="always"
         style={styles.searchBar}
       />
-      <Text>{searchTerm}</Text>
     </View>
   );
 };
