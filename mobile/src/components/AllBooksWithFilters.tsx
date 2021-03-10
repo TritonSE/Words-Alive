@@ -137,8 +137,6 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
           </Pressable>
         </View>
 
-        {/* <LangFilter/> */}
-
         {searchFilterComponent}
 
       </View>
