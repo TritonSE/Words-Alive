@@ -8,6 +8,7 @@ import { TextStyles } from '../styles/TextStyles';
 import { useBookSearchFilter } from './BookSearchFilter';
 import { Languages } from '../models/Languages';
 import { Colors } from '../styles/Colors';
+import { LangFilter } from './LangFilter';
 
 // constant for how many books to display per page
 const booksPerPage = 9;
@@ -82,9 +83,27 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
     <View>
 
+      <View style={styles.bookDisplay}>
+
+        <View style={{ marginHorizontal: 17, paddingBottom: 19 }}>
+          <Text>{JSON.stringify(filteredBooks.map(b => (`{Title: ${b.title} | Author: ${b.author} | Langs: ${b.languages}}`)))}</Text>
+        </View>
+
+        <View>
+          { loading ? <LoadingCircle/> : <PaginationBookList books={filteredBooks} booksPerPage={booksPerPage}/> }
+        </View>
+
+        <View>
+          <View style={loading ? styles.loading : filteredBooks.length === 0 ? styles.loading : null}>
+            { !loading && filteredBooks.length === 0 ? <Text style={styles.noResult}>No results</Text> : null }
+          </View>
+        </View>
+
+      </View>
+
       <View style={styles.filters}>
 
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
           <Modal
             animationType="slide"
             transparent
@@ -119,25 +138,14 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
             style={styles.filterButton}
             onPress={() => setModalVisible(true)}
           />
-        </View>
+        </View> */}
+
+        <LangFilter/>
 
         {searchFilterComponent}
 
       </View>
 
-      <View style={{ marginHorizontal: 17, paddingBottom: 19 }}>
-        <Text>{JSON.stringify(filteredBooks.map(b => (`{Title: ${b.title} | Author: ${b.author} | Langs: ${b.languages}}`)))}</Text>
-      </View>
-
-      <View>
-        { loading ? <LoadingCircle/> : <PaginationBookList books={filteredBooks} booksPerPage={booksPerPage}/> }
-      </View>
-
-      <View>
-        <View style={loading ? styles.loading : filteredBooks.length === 0 ? styles.loading : null}>
-          { !loading && filteredBooks.length === 0 ? <Text style={styles.noResult}>No results</Text> : null }
-        </View>
-      </View>
 
     </View>
 
@@ -145,10 +153,13 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 };
 
 const styles = StyleSheet.create({
+  bookDisplay: {
+    marginTop: 59,
+  },
   filters: {
     marginHorizontal: 17,
-    marginBottom: 19,
     flexDirection: 'row',
+    position: 'absolute',
   },
   loading: {
     height: (0.28 * width * booksPerPage / 3) + (12 * booksPerPage / 3),

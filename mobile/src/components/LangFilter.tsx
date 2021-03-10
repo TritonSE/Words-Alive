@@ -23,8 +23,8 @@ const langState = {
 };
 
 export const LangFilter: React.FC = () => {
-  // states for the modal pop-up and languages for the buttons & filter
-  const [modalVisible, setModalVisible] = useState(false);
+  // states for the dropdown and languages for the buttons & filter
+  const [dropdownVisible, setDropDownVisible] = useState(false);
   const [languages, setLanguages] = useState(langState);
 
   // toggle the language at a given index
@@ -35,17 +35,14 @@ export const LangFilter: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
 
-      <Modal
-        animationType="slide"
-        transparent
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
+    <Pressable
+      onPress={() => setDropDownVisible(!dropdownVisible)}
+      style={styles.container}
       >
-
+            
+        {dropdownVisible ? 
+        
         <View style={styles.modalView}>
 
           {languages.arr.map((el, index: number) => (
@@ -62,23 +59,15 @@ export const LangFilter: React.FC = () => {
 
           ))}
 
-          <Pressable
-            style={styles.confirmButton}
-            onPress={() => setModalVisible(!modalVisible)}
-          >
-            <Text style={styles.confirmText}>Confirm</Text>
-          </Pressable>
-
         </View>
+        
+         : 
 
-      </Modal>
+        null
 
-      <Pressable
-        style={styles.filterButton}
-        onPress={() => setModalVisible(true)}
-      />
+        }
 
-    </View>
+    </Pressable>
 
   );
 };
@@ -89,20 +78,16 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     marginRight: 10,
-    backgroundColor: 'lightblue',
-  },
-  filterButton: {
-    height: 40,
-    width: 40,
     backgroundColor: Colors.orange,
   },
   modalView: {
-    height: numLangs * 26 + 60,
+    height: numLangs * 28 + 14,
     width: 111,
-    marginLeft: 17,
-    marginTop: height * 0.4,
-    paddingVertical: 10,
+    marginTop: 50,
+    paddingTop: 8,
+    paddingBottom: 6,
     paddingHorizontal: 5,
+    justifyContent: 'center',
     backgroundColor: 'white',
     borderWidth: 2,
     borderColor: Colors.orange,
@@ -131,18 +116,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: Colors.orange,
     backgroundColor: 'red',
-  },
-  confirmButton: {
-    alignSelf: 'center',
-    marginTop: 5,
-    padding: 7.5,
-    height: 30,
-    width: 90,
-    backgroundColor: Colors.orange,
-  },
-  confirmText: {
-    color: 'white',
-    textAlign: 'center',
-    ...TextStyles.c2,
   },
 });
