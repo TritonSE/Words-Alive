@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Pressable, Image } from 'react-native';
 import { Colors } from '../styles/Colors';
 
 import { Languages } from '../models/Languages';
@@ -34,12 +34,14 @@ export const LangFilter: React.FC = () => {
 
   return (
 
-    <View style={styles.dropdownIcon}>
-  
+    <View>
+
     <Pressable
       onPress={() => setDropDownVisible(!dropdownVisible)}
       style={styles.button}
       >
+        <Image style ={styles.icon} source={require('../../assets/images/bars-solid.png')}/>
+
         {dropdownVisible ? 
         
         <View style={styles.dropdown}>
@@ -69,29 +71,26 @@ export const LangFilter: React.FC = () => {
 
     </Pressable>
 
-
-    </View>
+  </View>
 
   );
 };
 
 const styles = StyleSheet.create({
-  dropdownIcon: {
-    height: 40,
-    width: 40,
-    marginRight: 10,
-    backgroundColor: Colors.orange,
-  },
   button: {
     height: 40,
     width: 40,
-    //marginRight: 10,
-    //backgroundColor: Colors.orange,
+    marginRight: 10,
+  },
+  icon:{
+    height: 40,
+    width: 40,
+    tintColor: Colors.orange,
   },
   dropdown: {
     height: numLangs * 28 + 14,
     width: 111,
-    marginTop: 50,
+    marginTop: 10,
     paddingTop: 8,
     paddingBottom: 6,
     paddingHorizontal: 5,
