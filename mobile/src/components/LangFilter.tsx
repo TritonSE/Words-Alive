@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Pressable, Modal, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { Colors } from '../styles/Colors';
 
 import { Languages } from '../models/Languages';
 import { TextStyles } from '../styles/TextStyles';
-
-const { height } = Dimensions.get('window');
 
 // language codes and the number of languages
 const langCodes = Object.keys(Languages);
@@ -36,14 +34,15 @@ export const LangFilter: React.FC = () => {
 
   return (
 
+    <View style={styles.dropdownIcon}>
+  
     <Pressable
       onPress={() => setDropDownVisible(!dropdownVisible)}
-      style={styles.container}
+      style={styles.button}
       >
-            
         {dropdownVisible ? 
         
-        <View style={styles.modalView}>
+        <View style={styles.dropdown}>
 
           {languages.arr.map((el, index: number) => (
 
@@ -51,9 +50,10 @@ export const LangFilter: React.FC = () => {
               <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{Languages[el.lang]}</Text>
 
               <Pressable
-                style={el.isActive ? styles.boxChecked : styles.boxNotChecked}
                 onPress={() => onChangeLangFilter(index)}
-              />
+              >
+                {el.isActive ? <View style={[styles.box, styles.boxChecked]}/>: <View style={[styles.box, styles.boxNotChecked]}/>}
+              </Pressable>
 
             </View>
 
@@ -61,26 +61,34 @@ export const LangFilter: React.FC = () => {
 
         </View>
         
-         : 
+        : 
 
         null
 
-        }
+        } 
 
     </Pressable>
+
+
+    </View>
 
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  dropdownIcon: {
     height: 40,
     width: 40,
     marginRight: 10,
     backgroundColor: Colors.orange,
   },
-  modalView: {
+  button: {
+    height: 40,
+    width: 40,
+    //marginRight: 10,
+    //backgroundColor: Colors.orange,
+  },
+  dropdown: {
     height: numLangs * 28 + 14,
     width: 111,
     marginTop: 50,
@@ -90,6 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     borderWidth: 2,
+    borderRadius: 5,
     borderColor: Colors.orange,
     shadowColor: 'black',
     shadowRadius: 2,
@@ -101,20 +110,17 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     justifyContent: 'space-between',
   },
-  boxChecked: {
+  box: {
     height: 24,
     width: 24,
     borderWidth: 2,
     borderRadius: 5,
     borderColor: Colors.orange,
+  },
+  boxChecked: {
     backgroundColor: 'green',
   },
   boxNotChecked: {
-    height: 24,
-    width: 24,
-    borderWidth: 2,
-    borderRadius: 5,
-    borderColor: Colors.orange,
     backgroundColor: 'red',
-  },
+  }
 });

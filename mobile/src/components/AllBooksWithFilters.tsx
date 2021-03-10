@@ -83,6 +83,7 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
     <View>
 
+
       <View style={styles.bookDisplay}>
 
         <View style={{ marginHorizontal: 17, paddingBottom: 19 }}>

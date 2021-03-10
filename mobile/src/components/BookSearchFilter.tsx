@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, Keyboard, Dimensions, Image } from 'react-native';
+import { View, TextInput, StyleSheet, Keyboard, Dimensions, Image } from 'react-native';
 
 import { Book } from '../models/Book';
 import { TextStyles } from '../styles/TextStyles';
@@ -23,25 +23,24 @@ const BookSearchFilter = ({ onFilterChange }: BookSearchFilterProps): JSX.Elemen
   };
 
   return (
+
     <View style={styles.container}>
+      
+      <TextInput
+        value={searchTerm}
+        onChangeText={onChangeSearch}
+        placeholder=" Search for a book by title or author"
+        onBlur={Keyboard.dismiss}
+        clearButtonMode="always"
+        style={styles.searchBar}
+      />
 
-      <View style={styles.searchBarAndImage}>
-        <TextInput
-          value={searchTerm}
-          onChangeText={onChangeSearch}
-          placeholder=" Search for a book by title or author"
-          onBlur={Keyboard.dismiss}
-          clearButtonMode="always"
-          style={styles.searchBar}
-        />
-
-        <View style={styles.imageContainer}>
-          <Image style={styles.image} source={require('../../assets/images/search-solid.png')}/>
-        </View>
+      <View style={styles.imageContainer}>
+        <Image style={styles.image} source={require('../../assets/images/search-solid.png')}/>
       </View>
-      <Text>{searchTerm}</Text>
 
     </View>
+
   );
 };
 
@@ -69,12 +68,10 @@ export const useBookSearchFilter = (allBooks: Book[]): [Book[], JSX.Element] => 
 
 const styles = StyleSheet.create({
   container: {
-    height: 40,
-  },
-  searchBarAndImage: {
     flexDirection: 'row',
     width: width - 84,
     borderColor: Colors.orange,
+    height: 40,
     borderWidth: 2,
     borderRadius: 5,
     shadowColor: 'black',
@@ -83,13 +80,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
   },
   searchBar: {
-    height: 38,
+    height: 36,
     width: width - 134,
     ...TextStyles.c3,
   },
   imageContainer: {
     backgroundColor: Colors.orange,
-    height: 38,
+    height: 36,
     width: 48,
     justifyContent: 'center',
     alignItems: 'center',
