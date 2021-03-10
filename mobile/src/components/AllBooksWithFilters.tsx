@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Dimensions, Pressable, Modal } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, Pressable, Image } from 'react-native';
 
 import { LoadingCircle } from './LoadingCircle';
 import { PaginationBookList } from './PaginationBookList';
@@ -8,13 +8,11 @@ import { TextStyles } from '../styles/TextStyles';
 import { useBookSearchFilter } from './BookSearchFilter';
 import { Languages } from '../models/Languages';
 import { Colors } from '../styles/Colors';
-import { LangFilter } from './LangFilter';
 
 // constant for how many books to display per page
 const booksPerPage = 9;
 
 const { width } = Dimensions.get('window');
-const { height } = Dimensions.get('window');
 
 type AllBooksWithFiltersProps = { allBooks: Book[], loading: boolean};
 
@@ -41,8 +39,8 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
   // contains the array of books filtered by the search term and the search filter componenet
   const [filteredBySearch, searchFilterComponent] = useBookSearchFilter(allBooks);
 
-  // state for the modal pop-up
-  const [modalVisible, setModalVisible] = useState(false);
+  // state for the dropdown menu pop-up
+  const [dropdownVisible, setDropDownVisible] = useState(false);
 
   // state for the languages in pressable buttons & filter
   const [languages, setLanguages] = useState(langState);
@@ -83,7 +81,6 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
     <View>
 
-
       <View style={styles.bookDisplay}>
 
         <View style={{ marginHorizontal: 17, paddingBottom: 19 }}>
@@ -104,49 +101,47 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
       <View style={styles.filters}>
 
-        {/* <View style={styles.container}>
-          <Modal
-            animationType="slide"
-            transparent
-            visible={modalVisible}
-            onRequestClose={() => {
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <View style={styles.modalView}>
-
-              {languages.arr.map((el, index: number) => (
-                <View key={el.lang} style={styles.nameBoxContainer}>
-                  <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{Languages[el.lang]}</Text>
-                  <Pressable
-                    style={el.isActive ? styles.boxChecked : styles.boxNotChecked}
-                    onPress={() => onChangeLangFilter(index)}
-                  />
-                </View>
-              ))}
-
-              <Pressable
-                style={styles.confirmButton}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.confirmText}>Confirm</Text>
-              </Pressable>
-
-            </View>
-          </Modal>
-
+        <View>
           <Pressable
-            style={styles.filterButton}
-            onPress={() => setModalVisible(true)}
-          />
-        </View> */}
+            onPress={() => setDropDownVisible(!dropdownVisible)}
+            style={styles.button}
+          >
+            <Image style={styles.icon} source={require('../../assets/images/bars-solid.png')}/>
 
-        <LangFilter/>
+            {dropdownVisible ? (
+              <View style={styles.dropdown}>
+
+                {languages.arr.map((el, index: number) => (
+                  <View key={el.lang} style={styles.nameBoxContainer}>
+                    <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{Languages[el.lang]}</Text>
+
+                    <Pressable
+                      onPress={() => onChangeLangFilter(index)}
+                    >
+                      <View style={styles.box}>
+                        {el.isActive ?
+                          <Image style={styles.boxChecked} source={require('../../assets/images/check-square-solid.png')}/>
+                          :
+                          null}
+                      </View>
+                    </Pressable>
+
+                  </View>
+                ))}
+
+              </View>
+            )
+              :
+              null}
+
+          </Pressable>
+        </View>
+
+        {/* <LangFilter/> */}
 
         {searchFilterComponent}
 
       </View>
-
 
     </View>
 
@@ -169,27 +164,27 @@ const styles = StyleSheet.create({
     ...TextStyles.c2,
     textAlign: 'center',
   },
-  container: {
-    flex: 1,
+  button: {
     height: 40,
     width: 40,
     marginRight: 10,
-    backgroundColor: 'lightblue',
   },
-  filterButton: {
+  icon: {
     height: 40,
     width: 40,
-    backgroundColor: Colors.orange,
+    tintColor: Colors.orange,
   },
-  modalView: {
-    height: numLangs * 26 + 60,
+  dropdown: {
+    height: numLangs * 28 + 14,
     width: 111,
-    marginLeft: 17,
-    marginTop: height * 0.4,
-    paddingVertical: 10,
+    marginTop: 10,
+    paddingTop: 8,
+    paddingBottom: 6,
     paddingHorizontal: 5,
+    justifyContent: 'center',
     backgroundColor: 'white',
     borderWidth: 2,
+    borderRadius: 5,
     borderColor: Colors.orange,
     shadowColor: 'black',
     shadowRadius: 2,
@@ -201,33 +196,18 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     justifyContent: 'space-between',
   },
+  box: {
+    height: 24,
+    width: 24,
+    borderWidth: 2,
+    borderRadius: 5,
+    borderColor: Colors.orange,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   boxChecked: {
-    height: 24,
-    width: 24,
-    borderWidth: 2,
-    borderRadius: 5,
-    borderColor: Colors.orange,
-    backgroundColor: 'green',
-  },
-  boxNotChecked: {
-    height: 24,
-    width: 24,
-    borderWidth: 2,
-    borderRadius: 5,
-    borderColor: Colors.orange,
-    backgroundColor: 'red',
-  },
-  confirmButton: {
-    alignSelf: 'center',
-    marginTop: 5,
-    padding: 7.5,
-    height: 30,
-    width: 90,
-    backgroundColor: Colors.orange,
-  },
-  confirmText: {
-    color: 'white',
-    textAlign: 'center',
-    ...TextStyles.c2,
+    height: 22,
+    width: 22,
+    tintColor: Colors.orange,
   },
 });

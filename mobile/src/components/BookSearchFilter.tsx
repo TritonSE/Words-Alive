@@ -25,7 +25,7 @@ const BookSearchFilter = ({ onFilterChange }: BookSearchFilterProps): JSX.Elemen
   return (
 
     <View style={styles.container}>
-      
+
       <TextInput
         value={searchTerm}
         onChangeText={onChangeSearch}

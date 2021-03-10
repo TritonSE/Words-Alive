@@ -36,55 +36,41 @@ export const LangFilter: React.FC = () => {
 
     <View>
 
-    <Pressable
-      onPress={() => setDropDownVisible(!dropdownVisible)}
-      style={styles.button}
+      <Pressable
+        onPress={() => setDropDownVisible(!dropdownVisible)}
+        style={styles.button}
       >
-        <Image style ={styles.icon} source={require('../../assets/images/bars-solid.png')}/>
+        <Image style={styles.icon} source={require('../../assets/images/bars-solid.png')}/>
 
-        {dropdownVisible ? 
-        
-        <View style={styles.dropdown}>
+        {dropdownVisible ? (
+          <View style={styles.dropdown}>
 
-          {languages.arr.map((el, index: number) => (
+            {languages.arr.map((el, index: number) => (
+              <View key={el.lang} style={styles.nameBoxContainer}>
+                <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{Languages[el.lang]}</Text>
 
-            <View key={el.lang} style={styles.nameBoxContainer}>
-              <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{Languages[el.lang]}</Text>
-
-              <Pressable
-                onPress={() => onChangeLangFilter(index)}
-              >
-             
-              <View style={styles.box}>
-
-                    {el.isActive ? 
-                    
-                    <Image style={styles.boxChecked} source={require('../../assets/images/check-square-solid.png')}/>
-                  :
-                  
-                  null
-
-                  }
+                <Pressable
+                  onPress={() => onChangeLangFilter(index)}
+                >
+                  <View style={styles.box}>
+                    {el.isActive ?
+                      <Image style={styles.boxChecked} source={require('../../assets/images/check-square-solid.png')}/>
+                      :
+                      null}
+                  </View>
+                </Pressable>
 
               </View>
-             
-              </Pressable>
+            ))}
 
-            </View>
+          </View>
+        )
+          :
+          null}
 
-          ))}
+      </Pressable>
 
-        </View>
-        
-        : 
-
-        null
-
-        } 
-
-    </Pressable>
-
-  </View>
+    </View>
 
   );
 };
@@ -95,7 +81,7 @@ const styles = StyleSheet.create({
     width: 40,
     marginRight: 10,
   },
-  icon:{
+  icon: {
     height: 40,
     width: 40,
     tintColor: Colors.orange,
