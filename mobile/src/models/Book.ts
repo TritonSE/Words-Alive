@@ -1,14 +1,14 @@
-// For main page listings
+import { Language } from './Languages';
+
 export type Book = {
     id: string
     title: string
     author: string
     image?: string
-    languages: string[]
+    languages: Language[]
     created_at: string
 };
 
-// Contains the contents of a book (all book information)
 type BookDetails = {
     id: string
     title: string
