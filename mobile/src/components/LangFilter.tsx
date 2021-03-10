@@ -54,7 +54,20 @@ export const LangFilter: React.FC = () => {
               <Pressable
                 onPress={() => onChangeLangFilter(index)}
               >
-                {el.isActive ? <View style={[styles.box, styles.boxChecked]}/>: <View style={[styles.box, styles.boxNotChecked]}/>}
+             
+              <View style={styles.box}>
+
+                    {el.isActive ? 
+                    
+                    <Image style={styles.boxChecked} source={require('../../assets/images/check-square-solid.png')}/>
+                  :
+                  
+                  null
+
+                  }
+
+              </View>
+             
               </Pressable>
 
             </View>
@@ -115,11 +128,12 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
     borderColor: Colors.orange,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   boxChecked: {
-    backgroundColor: 'green',
+    height: 22,
+    width: 22,
+    tintColor: Colors.orange,
   },
-  boxNotChecked: {
-    backgroundColor: 'red',
-  }
 });
