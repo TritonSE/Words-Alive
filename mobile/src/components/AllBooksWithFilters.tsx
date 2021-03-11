@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, Dimensions, Pressable, Image } from 'react-native';
 
 import { LoadingCircle } from './LoadingCircle';
-import { PaginationBookList } from './PaginationBookList';
+import { PaginatedBookList } from './PaginatedBookList';
 import { useBookSearchFilter } from './BookSearchFilter';
 import { Book } from '../models/Book';
 import { TextStyles } from '../styles/TextStyles';
 import { Languages } from '../models/Languages';
 import { Colors } from '../styles/Colors';
 
-// how many books to display per page (in the pagination booklist)
+// how many books to display per page (in the paginated booklist)
 const booksPerPage = 9;
 
 const { width } = Dimensions.get('window');
@@ -85,7 +85,7 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
       <View style={styles.bookDisplay}>
 
         <View>
-          { loading ? <LoadingCircle/> : <PaginationBookList books={filteredBooks} booksPerPage={booksPerPage}/> }
+          { loading ? <LoadingCircle/> : <PaginatedBookList books={filteredBooks} booksPerPage={booksPerPage}/> }
         </View>
 
         <View style={loading ? styles.loading : filteredBooks.length === 0 ? styles.loading : null}>

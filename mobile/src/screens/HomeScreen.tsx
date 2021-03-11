@@ -21,8 +21,7 @@ export const HomeScreen: React.FC = () => {
   const newBooks = booksCtx.books
     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     .slice(0, 5);
-  const allBooks = booksCtx.books;
-  const { loading } = booksCtx;
+  const { books, loading } = booksCtx;
 
   const i18nCtx = useContext(I18nContext);
 
@@ -69,7 +68,7 @@ export const HomeScreen: React.FC = () => {
         </View>
 
         <View>
-          <AllBooksWithFilters allBooks={allBooks} loading={loading}/>
+          <AllBooksWithFilters allBooks={books} loading={loading}/>
         </View>
 
       </VirtualizedView>

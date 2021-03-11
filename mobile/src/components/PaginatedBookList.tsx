@@ -7,12 +7,12 @@ import { BookCard } from './BookCard';
 
 const { width } = Dimensions.get('window');
 
-type PaginationBookListProps = { books: Book[], booksPerPage: number };
+type PaginatedBookListProps = { books: Book[], booksPerPage: number };
 
 /**
 * Renders a "paginated" list of books where books are grouped into grids and displayed on multiple pages.
 */
-export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books, booksPerPage }) => {
+export const PaginatedBookList: React.FC<PaginatedBookListProps> = ({ books, booksPerPage }) => {
   // "chunks" the books into groups of size <booksPerPage> and fills any empty spots
   const booksChunked: Book[][] = [];
   const empty = Array(booksPerPage).fill(null);
@@ -54,7 +54,6 @@ export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books, b
 
           <View style={styles.text}>
             <Text style={TextStyles.h3}> {'<'} {index + 1} {'>'} </Text>
-            <Text style={{ ...TextStyles.h1, fontSize: 10 }}>of {booksChunked.length}</Text>
           </View>
 
         </View>
