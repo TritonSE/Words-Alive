@@ -82,7 +82,6 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
     <View>
 
-
       <View style={styles.bookDisplay}>
 
         <View>
@@ -94,7 +93,6 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
         </View>
 
       </View>
-
 
       <View style={styles.filters}>
 
@@ -137,7 +135,6 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
         {searchFilterComponent}
 
       </View>
-
 
     </View>
 
