@@ -86,5 +86,6 @@ const styles = StyleSheet.create({
   },
   text: {
     alignItems: 'center',
+    marginBottom: 5,
   },
 });
