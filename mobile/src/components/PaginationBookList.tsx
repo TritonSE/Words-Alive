@@ -10,10 +10,10 @@ const { width } = Dimensions.get('window');
 type PaginationBookListProps = { books: Book[], booksPerPage: number };
 
 /**
-* Renders a "paginated" list of books where books are grouped and displayed on multiple pages.
+* Renders a "paginated" list of books where books are grouped into grids and displayed on multiple pages.
 */
 export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books, booksPerPage }) => {
-  // "Chunks" the books into groups of size <booksPerPage> and fills any empty spots
+  // "chunks" the books into groups of size <booksPerPage> and fills any empty spots
   const booksChunked: Book[][] = [];
   const empty = Array(booksPerPage).fill(null);
 
@@ -23,6 +23,7 @@ export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books, b
   }
 
   return (
+
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator
@@ -35,7 +36,6 @@ export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books, b
           <View style={styles.grid}>
 
             { bookArray.map((bookItem: Book, emptyIndex: number) => (
-
               bookItem != null ?
                 (
                   <View key={`bookID${bookItem.id}`} style={styles.bookCard}>
@@ -61,6 +61,7 @@ export const PaginationBookList: React.FC<PaginationBookListProps> = ({ books, b
       ))}
 
     </ScrollView>
+
   );
 };
 

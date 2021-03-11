@@ -15,7 +15,7 @@ type BookSearchFilterProps = { onFilterChange: (searchTerm: string) => void };
 const BookSearchFilter = ({ onFilterChange }: BookSearchFilterProps): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // When the text inside the search bar is changed, set that text to be the searchTerm
+  // when the text inside the search bar is changed, set that text to be the searchTerm
   // and filter the books based on the text.
   const onChangeSearch = (text: string): void => {
     setSearchTerm(text);
@@ -47,11 +47,11 @@ const BookSearchFilter = ({ onFilterChange }: BookSearchFilterProps): JSX.Elemen
 /**
  * Custom hook that filters books on user input in the search bar and returns the
  * filtered books in an array and the BookSearchFilter component.
- * The filterBooks method does the actual filtering and is passed into the component.
  */
 export const useBookSearchFilter = (allBooks: Book[]): [Book[], JSX.Element] => {
   const [filteredBooks, setFilteredBooks] = useState(allBooks);
 
+  // filter the books based on title or author
   const filterBooks = (searchTerm: string): void => {
     setFilteredBooks(
       allBooks.filter((book: Book) => {
