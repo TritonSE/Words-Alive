@@ -116,7 +116,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'Charlotte\'s Web',
           image: 'https://placekitten.com/200/301',
           author: 'E.B. White',
-          languages: ['en', 'fr', 'es'],
+          languages: ['en', 'es', 'fr'],
           created_at: '1500',
         },
         {
@@ -164,7 +164,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: 'The Giver',
           image: 'https://placekitten.com/200/307',
           author: 'Lois Lowry',
-          languages: ['en', 'fr', 'es'],
+          languages: ['en', 'es', 'fr'],
           created_at: '1000',
         },
         {
@@ -172,7 +172,7 @@ export const BookProvider: React.FC = ({ children }) => {
           title: '!@#%^&*(()_+{}|:"?><~-=',
           image: 'https://placekitten.com/200/310',
           author: 'anonymous',
-          languages: ['fr', 'es'],
+          languages: ['es', 'fr'],
           created_at: '1000',
         },
         {

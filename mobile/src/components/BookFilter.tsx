@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, Keyboard, Dimensions, Image, Pressable, Text } from 'react-native';
 
 import { Book } from '../models/Book';
@@ -27,8 +27,8 @@ type BookFilterProps = { onSearchLangChange: (text: string, langSet: Set<Languag
 const BookFilter = ({ onSearchLangChange }: BookFilterProps): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // when the text inside the search bar is changed, set that text to be the searchTerm
-  // and filter the books based on the text
+  // when the text inside the search bar or the set of active languages are changed,
+  // set that text to be the searchTerm and filter the books based on the text and current active languages
   const onFilterChange = (text: string, langSet: Set<Language>): void => {
     setSearchTerm(text);
     onSearchLangChange(text, langSet);
@@ -43,22 +43,26 @@ const BookFilter = ({ onSearchLangChange }: BookFilterProps): JSX.Element => {
   // when a new language is selected or deselected,
   // if the language already exists in the set of selected languages, then delete that language from the set
   // else, it doesn't exist, and add the new language to the set
-  // also filter the books based on the "active languages"
+  // also filter the books based on the "active languages" and the current search term
   const onChangeLangFilter = (newLang: Language): void => {
     selectedLangs.has(newLang) ?
       setSelectedLangs((prevLangs) => {
         const temp = new Set<Language>(prevLangs);
         temp.delete(newLang);
-        onFilterChange(searchTerm, temp);
+        //onFilterChange(searchTerm, temp);
         return temp;
       })
       :
       setSelectedLangs((prevLangs) => {
         const temp = new Set<Language>(prevLangs).add(newLang);
-        onFilterChange(searchTerm, temp);
+        //onFilterChange(searchTerm, temp);
         return temp;
       });
   };
+
+  useEffect(() => {
+    onFilterChange(searchTerm, selectedLangs);
+  }, [selectedLangs]);
 
   return (
     <View style={styles.filters}>
@@ -129,7 +133,7 @@ export const useBookFilter = (allBooks: Book[]): [Book[], JSX.Element] => {
   const [filteredBooks, setFilteredBooks] = useState(allBooks);
 
   // filter the books by title or author and by language
-  // if no languages are specified, then defualt to filter by search on all books
+  // if no languages are specified, then default to filter by search on all books
   const filterBooks = (searchTerm: string, langSet: Set<Language>): void => {
     if (langSet.size !== 0) {
       setFilteredBooks(
@@ -148,15 +152,6 @@ export const useBookFilter = (allBooks: Book[]): [Book[], JSX.Element] => {
       );
     }
   };
-
-  // filter the books by language
-  // const filterBooksLang = (langSet: Set<Language>): void => {
-  //     setFilteredBooks(
-  //       allBooks.filter((book: Book) => {
-  //         return book.languages.some(l => langSet.has(l));
-  //       }),
-  //     );
-  // };
 
   const filterComponent = BookFilter({ onSearchLangChange: filterBooks });
 
