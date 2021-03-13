@@ -32,4 +32,9 @@ export const TextStyles = StyleSheet.create({
     fontFamily: 'Gotham-Light',
     fontWeight: '300',
   },
+  c4: {
+    fontSize: 18,
+    fontFamily: 'Gotham-Medium',
+    fontWeight: 'normal',
+  },
 });

@@ -171,7 +171,7 @@ export const BookProvider: React.FC = ({ children }) => {
           id: '18',
           title: '!@#%^&*(()_+{}|:"?><~-=',
           image: 'https://placekitten.com/200/310',
-          author: 'no author',
+          author: 'anonymous',
           languages: ['fr', 'es'],
           created_at: '1000',
         },
@@ -225,7 +225,6 @@ export const BookProvider: React.FC = ({ children }) => {
         },
       ];
       dispatch({ type: 'API_RETURNED', payload: books });
-
     });
   }
 

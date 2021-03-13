@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Dimensions, Pressable, Image } from 'react-native';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
 
 import { LoadingCircle } from './LoadingCircle';
 import { PaginatedBookList } from './PaginatedBookList';
-import { useBookSearchFilter } from './BookSearchFilter';
+import { useBookFilter } from './BookFilter';
 import { Book } from '../models/Book';
 import { TextStyles } from '../styles/TextStyles';
-import { Languages } from '../models/Languages';
+import { Language, Languages } from '../models/Languages';
 import { Colors } from '../styles/Colors';
 
-// how many books to display per page (in the paginated booklist)
+// how many books to display per page (in the Paginated Booklist)
 const booksPerPage = 9;
 
 const { width } = Dimensions.get('window');
@@ -20,54 +20,47 @@ type AllBooksWithFiltersProps = { allBooks: Book[], loading: boolean};
 const langCodes = Object.keys(Languages);
 const numLangs = langCodes.length;
 
-// array of objects containing the language code and whether the language is "active" (if its button is pressed)
-// for use in the filter with default of "not active"
-const langArray = [];
-langCodes.forEach(el => {
-  langArray.push({ lang: el, isActive: false });
-});
+// max length of a language, to adjust sizing in the language filter pop-up
+const maxLength = Object.values(Languages).sort((a, b) => b.length - a.length)[0].length;
 
-// object containing the array of language objects for use as a state
-const langState = {
-  arr: langArray,
-};
+// array of Languages containing the language code for use in displaying all the languages in the filter
+const languages = [];
+langCodes.forEach(el => { languages.push(el); });
 
 /**
  *  Renders the All Books section with a search filter and displays the paginated books.
  */
 export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBooks, loading }) => {
   // contains the array of books filtered by the search term and the search filter componenet
-  const [filteredBySearch, searchFilterComponent] = useBookSearchFilter(allBooks);
+  const [filteredBySearch, searchFilterComponent] = useBookFilter(allBooks);
 
   // state for the dropdown menu pop-up
   const [dropdownVisible, setDropDownVisible] = useState(false);
 
-  // state for the language filter's pressable buttons
-  const [languages, setLanguages] = useState(langState);
+  // state for the which of the language filter's pressable buttons are "selected"
+  const [selectedLangs, setSelectedLangs] = useState(new Set<Language>());
 
-  // toggle the language's isActive value (active -> not active, not active -> active)
-  // at a given index (each language has a specific index, when creating the langArray)
-  const onChangeLangFilter = (index: number): void => {
-    const temp = langState.arr;
-    temp[index].isActive = !temp[index].isActive;
-    setLanguages({ arr: temp });
+  // when a new language is selected or deselected,
+  // if the language already exists in the set of selected languages, then delete that language from the set
+  // else, it doesn't exist, and add the new language to the set
+  const onChangeLangFilter = (newLang: Language): void => {
+    selectedLangs.has(newLang) ?
+      setSelectedLangs((prevLangs) => {
+        const temp = new Set<Language>(prevLangs);
+        temp.delete(newLang);
+        return temp;
+      })
+      :
+      setSelectedLangs((prevLangs) => new Set<Language>(prevLangs).add(newLang));
   };
 
-  // store the current active languages in an array for use in the filtering process below
-  const activeLanguages = [];
-  languages.arr.forEach(item => {
-    if (item.isActive) {
-      activeLanguages.push(item.lang);
-    }
-  });
-
   // filter the books (that were returned by the search filter) by language, adding books to the filteredByLang array
-  // if the book's languages array contain any of the (active) languages specified in the language filter buttons
+  // if the book's languages array contain any of the (selected) languages specified through the language filter buttons
   const filteredByLang = [];
-  if (activeLanguages.length !== 0) {
+  if (selectedLangs.size !== 0) {
     for (let i = 0; i < filteredBySearch.length; i++) {
       const bookItemLangs = filteredBySearch[i].languages;
-      if (bookItemLangs.some(l => activeLanguages.includes(l))) {
+      if (bookItemLangs.some(l => selectedLangs.has(l))) {
         filteredByLang.push(filteredBySearch[i]);
       }
     }
@@ -75,14 +68,18 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
   // filteredBooks are the resulting books to be displayed.
   // if no languages are specified, then default to the books that were returned by the search filter
-  // otherwise, use the books that were filtered by language (in addition to by search term)
-  const filteredBooks = activeLanguages.length === 0 ? filteredBySearch : filteredByLang;
+  // else, use the books that were filtered by language (in addition to by search term)
+  const filteredBooks = selectedLangs.size === 0 ? filteredBySearch : filteredByLang;
 
   return (
 
     <View>
 
       <View style={styles.bookDisplay}>
+
+        <View style={{ marginHorizontal: 17, paddingBottom: 19 }}>
+          <Text>{JSON.stringify(filteredBooks.map(b => (`{Title: ${b.title} | Author: ${b.author} | Langs: ${b.languages}}`)))}</Text>
+        </View>
 
         <View>
           { loading ? <LoadingCircle/> : <PaginatedBookList books={filteredBooks} booksPerPage={booksPerPage}/> }
@@ -94,7 +91,7 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
 
       </View>
 
-      <View style={styles.filters}>
+      {/* <View style={styles.filters}>
 
         <View>
           <Pressable
@@ -106,22 +103,23 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
             {dropdownVisible ? (
               <View style={styles.dropdown}>
 
-                {languages.arr.map((el, index: number) => (
-                  <View key={el.lang} style={styles.nameBoxContainer}>
-                    <Text style={{ ...TextStyles.c2, alignSelf: 'center' }}>{Languages[el.lang]}</Text>
-
+                {languages.map((lang: Language) => (
                     <Pressable
-                      onPress={() => onChangeLangFilter(index)}
+                      key={`button${lang}`}
+                      onPress={() => onChangeLangFilter(lang)}
                     >
-                      <View style={styles.box}>
-                        {el.isActive ?
-                          <Image style={styles.boxChecked} source={require('../../assets/images/check-square-solid.png')}/>
-                          :
-                          null}
+                      <View key={`nameBox${lang}`} style={styles.nameBoxContainer}>
+                      <Text key={`name${lang}`} style={{ ...TextStyles.c4, alignSelf: 'center' }}>{Languages[lang]}</Text>
+
+                        <View key={`box${lang}`} style={styles.box}>
+                          {selectedLangs.has(lang) ?
+                            <Image key={`check${lang}`} style={styles.boxChecked} source={require('../../assets/images/check-square-solid.png')}/>
+                            :
+                            null}
+                        </View>
+
                       </View>
                     </Pressable>
-
-                  </View>
                 ))}
 
               </View>
@@ -130,11 +128,10 @@ export const AllBooksWithFilters: React.FC<AllBooksWithFiltersProps> = ({ allBoo
               null}
 
           </Pressable>
-        </View>
+        </View> */}
+      {searchFilterComponent}
 
-        {searchFilterComponent}
-
-      </View>
+      {/* </View> */}
 
     </View>
 
@@ -169,7 +166,8 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     height: numLangs * 28 + 14,
-    width: 120,
+    // width: 140,
+    width: maxLength * 14,
     marginTop: 10,
     paddingTop: 8,
     paddingBottom: 6,
